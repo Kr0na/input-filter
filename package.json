@@ -1,7 +1,7 @@
 {
   "name": "input-filter",
-  "version": "0.0.3",
-  "description": "InputFilter implementation",
+  "version": "0.0.5",
+  "description": "InputFilter js implementation",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,11 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Kr0na/input-filter.git"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
   },
   "keywords": [
     "Input",
@@ -19,6 +24,7 @@
   "author": "Alex Grand <alex@granted.name>",
   "license": "MIT",
   "devDependencies": {
+    "babel": "^5.1.11",
     "babelify": "^6.0.2",
     "gulp": "^3.8.11",
     "gulp-uglify": "^1.2.0"

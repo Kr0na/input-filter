@@ -9,7 +9,7 @@ class InputFilter {
     }
 
     add(input) {
-        this.inputes[input.name] = input
+        this.inputs[input.name] = input
 
         return this
     }
@@ -31,30 +31,33 @@ class InputFilter {
         if (this.promise) {
             return this.promise
         }
-        this.promise = new Promise((resolve, reject) => {
-            let promises = []
-            for (let name in this.inputs) {
-                if (this.inputs.hasOwnProperty(name)) {
-                    let value = this.data[name]
-                    let input = this.inputs[name]
-                    let promise = input.setValue(value).isValid(this.data)
-                    promise.then(
-                        () => {},
-                        (messages) => {
-                            this.messages[name] = messages
+        let promises = []
+        for (let name in this.inputs) {
+            if (this.inputs.hasOwnProperty(name)) {
+                let value = this.data[name]
+                let input = this.inputs[name]
+                let promise = input.setValue(value).isValid(this.data)
+                promise.then(
+                    () => {},
+                    (messages) => {
+                        if (!this.messages[name]) {
+                            this.messages[name] = []
                         }
-                    )
-                    promises.push(promise)
-                }
+                        this.messages[name].push(messages)
+                    }
+                )
+                promises.push(promise)
             }
-            Promise.all(promises)
+        }
+        this.promise = Promise.all(promises).catch(() => {
+            throw this.messages
         })
 
         this.promise.then(
             () => {
                 this.valid = true
             },
-            (messages) => {
+            () => {
                 this.valid = false
             }
         )

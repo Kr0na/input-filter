@@ -1,7 +1,7 @@
 
 class Chain {
 
-    constuctor() {
+    constructor() {
         this.chain = []
         this.messages = {}
     }
