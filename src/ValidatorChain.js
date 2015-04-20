@@ -18,4 +18,4 @@ class ValidatorChain extends Chain {
     }
 }
 
-export Default ValidatorChain
+export default ValidatorChain
