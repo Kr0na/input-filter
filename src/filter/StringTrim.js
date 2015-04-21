@@ -5,3 +5,5 @@ class StringTrim {
         return value.trim()
     }
 }
+
+export default StringTrim

@@ -21,9 +21,6 @@ class Input {
     }
 
     setValue(value) {
-        if (value === this.value) {
-            return this
-        }
         this.value = this.filterChain.filter(value)
 
         //Reset Validator for validate data again

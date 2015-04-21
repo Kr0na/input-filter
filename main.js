@@ -2,6 +2,7 @@ export default {
     Input: require('./src/Input.js'),
     InputFilter: require('./src/InputFilter.js'),
 
+    Bool: require('./src/filter/Bool.js'),
     StringTrim: require('./src/filter/StringTrim.js'),
     Float: require('./src/filter/Float.js'),
     Integer: require('./src/filter/Integer.js'),
