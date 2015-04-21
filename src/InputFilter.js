@@ -11,7 +11,7 @@ class InputFilter {
     }
 
     init() {
-        
+
     }
 
     add(input) {
@@ -46,7 +46,7 @@ class InputFilter {
         for (let name in this.inputs) {
             if (this.inputs.hasOwnProperty(name)) {
                 let input = this.inputs[name]
-                input.setValue(this.data[name])
+                input.setValue(this.rawData[name])
                 this.data[name] = input.getValue()
                 let promise = input.isValid(this.data)
                 promise.catch(

@@ -8,3 +8,4 @@ import './validator/Date.js'
 import './validator/StringLength.js'
 
 import './ValidatorChain.js'
+import './InputFilter.js'
