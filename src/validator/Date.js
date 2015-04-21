@@ -2,9 +2,6 @@ import moment from 'moment'
 
 class Date {
 
-    const FORMAT_DEFAULT = 'MM-DD-YYYY'
-    const FORMAT_US = 'DD/MM/YYYY'
-
     constructor(options = Date.FORMAT_DEFAULT) {
         if (typeof options === 'string') {
             this.format = options
@@ -20,8 +17,15 @@ class Date {
         }
         var a = moment(value, this.format, true)
 
-        return a.isValid()
+        if (a.isValid()) {
+            return true
+        } else {
+            return Promise.reject(this.message)
+        }
     }
 }
+
+Date.FORMAT_DEFAULT = 'DD-MM-YYYY'
+Date.FORMAT_US = 'MM/DD/YYYY'
 
 export default Date

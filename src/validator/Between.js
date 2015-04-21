@@ -13,7 +13,7 @@ class Between {
     }
 
     isValid(value) {
-        if (!typeof a === 'number' || value !== parseFloat(value).toString()) {
+        if (typeof value !== 'number' && parseFloat(value).toString() !== value) {
             throw new Error(`${value} is not an Number`)
         }
         if (this.min && this.max) {
