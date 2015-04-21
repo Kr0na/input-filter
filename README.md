@@ -1,5 +1,5 @@
 # input-filter
-
+[![Build Status](https://travis-ci.org/Kr0na/input-filter.svg)](https://travis-ci.org/Kr0na/input-filter)
 InputFilter js implementation for Filtering/Validation data
 
 ## Example
