@@ -35,7 +35,6 @@ describe('InputFilter', () => {
         return fooBarFilter.isValid()
         .then(
             (data) => {
-                console.log(data)
                 throw new Error('should be invalid')
             },
             (messages) => {
@@ -51,7 +50,8 @@ describe('InputFilter', () => {
         it('should create from object', () => {
             let fooBarFilter = InputFilter.factory({
                 foo: {
-                    validators: ['StringLength']
+                    validators: ['StringLength'],
+                    filters: ['StringTrim']
                 },
                 bar: {
                     required: false,
@@ -69,8 +69,27 @@ describe('InputFilter', () => {
             assert.property(fooBarFilter.inputs, 'foo')
             assert.property(fooBarFilter.inputs, 'bar')
             assert.lengthOf(fooBarFilter.inputs.foo.validatorChain.chain, 1)
+            assert.lengthOf(fooBarFilter.inputs.foo.filterChain.chain, 1)
             assert.lengthOf(fooBarFilter.inputs.bar.validatorChain.chain, 1)
             assert.isFalse(fooBarFilter.inputs.bar.required)
+        })
+        it('should filter values before validation', () => {
+            let fooBarFilter = InputFilter.factory({
+                foo: {
+                    validators: [new StringLength({min:3})],
+                    filters: ['StringTrim']
+                }
+            })
+            return fooBarFilter.setData({foo: "   12  "}).isValid()
+                .then(
+                    () => {
+                        throw new Error('should use filters')
+                    },
+                    () => {
+                        assert.equal(fooBarFilter.data.foo, "12")
+                        return true
+                    }
+                )
         })
     })
 })

@@ -10,6 +10,7 @@ export default {
     Between: require('./src/validator/Between.js'),
     Callback: require('./src/validator/Callback.js'),
     Date: require('./src/validator/Date.js'),
+    InArray: require('./src/validator/InArray.js'),
     StringLength: require('./src/validator/StringLength.js'),
 
     FilterChain: require('./src/FilterChain.js'),

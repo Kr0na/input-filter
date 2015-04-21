@@ -1,5 +1,6 @@
 import Input from './Input.js'
 import ValidatorRegistry from './validator/validators.js'
+import FilterRegistry from './filter/filters.js'
 
 class InputFilter {
 
@@ -88,9 +89,17 @@ class InputFilter {
         for (let name in items) {
             if (items.hasOwnProperty(name)) {
                 let input = new Input(name)
-                let {validators, required} = items[name]
+                let {validators, filters, required} = items[name]
                 if (required === false) {
                     input.required = false
+                }
+                if (Array.isArray(filters)) {
+                    filters.forEach((filter) => {
+                        if (typeof filter === 'string') {
+                            filter = new FilterRegistry[filter]
+                        }
+                        input.getFiltration().add(filter)
+                    })
                 }
                 if (Array.isArray(validators)) {
                     validators.forEach((validator) => {
