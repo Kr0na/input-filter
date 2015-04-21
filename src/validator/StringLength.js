@@ -1,7 +1,7 @@
 
 class StringLength {
 
-    constructor(options) {
+    constructor(options = {}) {
         this.min = options.min || false
         this.max = options.max || false
         this.message = options.message || (options.min >= 0 && options.max >= 0)

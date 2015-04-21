@@ -2,16 +2,15 @@
 
 InputFilter js implementation for Filtering/Validation data
 
-#example
+## Example
 
-Filter Declaration:
+### with ES6 classes
 ``` js
-import {InputFilter, Input, StringLength} from '../main.js'
+import {InputFilter, Input, StringLength} from 'input-filter'
 
 class LoginFilter extends InputFilter {
 
-    constructor() {
-        super()
+    init() {
         let login = new Input('login')
         login.getValidation().add(new StringLength({min: 3}))
         let password = new Input('password')
@@ -21,10 +20,6 @@ class LoginFilter extends InputFilter {
     }
 }
 
-export default LoginFilter
-```
-Usage:
-```js
 var validator = new LoginFilter
 //Invalid data
 validator.setData({login: 'aa', password: 'dd'})
@@ -48,7 +43,34 @@ validator.isValid().then(
 )
 ```
 
-#install
+### with InputFilter.factory
+```js
+import {InputFilter, StringLength, Callback} from 'input-filter'
+
+let fooBarFilter = InputFilter.factory({
+    foo: {
+        required: false,
+        validators: ['Date']
+    },
+    bar: {
+        validators: [
+            new StringLength({min:3}),
+            new Callback((value) => {
+                if (value === '***') {
+                    return Promise.reject('value cannot be ***')
+                }
+            })
+        ]
+    }
+})
+
+fooBarFilter.setData({foo: "", bar: "***"}).isValid().catch((errors) => {
+    console.log(errors) //{bar: ['value cannot be ***']}
+})
+
+```
+
+## Install
 
 With [npm](npmjs.org) do:
 ```

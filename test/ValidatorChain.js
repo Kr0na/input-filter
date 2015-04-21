@@ -37,6 +37,12 @@ describe('ValidatorChain', () => {
         promises.push(chain.isValid(4))
         promises.push(chain.isValid(6))
 
-        return Promise.all(promises).catch(() => true)
+        return Promise.all(promises)
+        .then(
+            () => {
+                throw new Error('should be invalid')
+            },
+            () => true
+        )
     })
 })

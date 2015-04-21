@@ -31,13 +31,46 @@ describe('InputFilter', () => {
     })
     it('should be invalid', () => {
         let fooBarFilter = new FooBarFilter
-        fooBarFilter.setData({foo: "123", bar: 5})
-        return fooBarFilter.isValid().catch((messages) => {
-            if (messages.hasOwnProperty('foo') && !messages.hasOwnProperty('bar')) {
-                return true
-            } else {
-                throw(messages)
+        fooBarFilter.setData({foo: "12", bar: 5})
+        return fooBarFilter.isValid()
+        .then(
+            (data) => {
+                console.log(data)
+                throw new Error('should be invalid')
+            },
+            (messages) => {
+                if (messages.hasOwnProperty('foo') && !messages.hasOwnProperty('bar')) {
+                    return true
+                } else {
+                    throw(messages)
+                }
             }
+        )
+    })
+    describe('Factory', () => {
+        it('should create from object', () => {
+            let fooBarFilter = InputFilter.factory({
+                foo: {
+                    validators: ['StringLength']
+                },
+                bar: {
+                    required: false,
+                    validators: [
+                        new Callback((value) => {
+                            if (value == 5) {
+                                return true
+                            } else {
+                                return Promise.reject('value shoul be 5')
+                            }
+                        })
+                    ]
+                }
+            })
+            assert.property(fooBarFilter.inputs, 'foo')
+            assert.property(fooBarFilter.inputs, 'bar')
+            assert.lengthOf(fooBarFilter.inputs.foo.validatorChain.chain, 1)
+            assert.lengthOf(fooBarFilter.inputs.bar.validatorChain.chain, 1)
+            assert.isFalse(fooBarFilter.inputs.bar.required)
         })
     })
 })
