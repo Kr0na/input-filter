@@ -6,3 +6,5 @@ import './filter/StringTrim.js'
 import './validator/Between.js'
 import './validator/Date.js'
 import './validator/StringLength.js'
+
+import './ValidatorChain.js'
