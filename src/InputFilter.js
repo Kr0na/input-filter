@@ -1,6 +1,7 @@
 import Input from './Input.js'
 import ValidatorRegistry from './validator/validators.js'
 import FilterRegistry from './filter/filters.js'
+import PromiseHelper from './PromiseHelper.js'
 
 class InputFilter {
 
@@ -45,37 +46,13 @@ class InputFilter {
         if (this.promise) {
             return this.promise
         }
-        this.promise = new Promise((resolve, reject) => {
-            let promises = []
-            let valid = true
-            let errors = {}
-            for (let name in this.inputs) {
-                if (this.inputs.hasOwnProperty(name)) {
-                    let input = this.inputs[name]
-                    input.setValue(this.rawData[name])
-                    this.data[name] = input.getValue()
-                    promises.push(input.isValid(this.data).catch(
-                        (messages) => {
-                            valid = false
-                            errors[name] = messages
-                            return true
-                        }
-                    ))
-                }
-            }
-            Promise.all(promises).then(
-                () => {
-                    if (!valid) {
-                        this.valid = false
-                        this.messages = errors
-                        reject(errors)
-                    } else {
-                        this.valid = true
-                        resolve(this.data)
-                    }
-                }
-            )
+        let promises = Object.keys(this.inputs).map(name => {
+            let input = this.inputs[name]
+            this.data[name] = input.setValue(this.rawData[name]).getValue()
+            return input.isValid(this.data)
         })
+
+        this.promise = PromiseHelper.assignRejects(promises)
 
         return this.promise
     }

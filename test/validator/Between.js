@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Between} from '../../main.js'
+import {Between, PromiseHelper} from '../../main.js'
 
 describe('Validator', () => {
     describe('Between', () => {
@@ -24,9 +24,7 @@ describe('Validator', () => {
             promises.push(between3And5.isValid(2))
             promises.push(between3And5.isValid(6))
 
-            return Promise.all(promises).catch(() => {
-                return true
-            })
+            return PromiseHelper.rejectedAll(promises)
         })
     })
 })

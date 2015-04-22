@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {StringLength} from '../../main.js'
+import {StringLength, PromiseHelper} from '../../main.js'
 
 describe('Validator', () => {
     describe('StringLength', () => {
@@ -23,9 +23,7 @@ describe('Validator', () => {
             promises.push(between3And5.isValid("12"))
             promises.push(between3And5.isValid("123456"))
 
-            return Promise.all(promises).catch(() => {
-                return true
-            })
+            return PromiseHelper.rejectedAll(promises)
         })
     })
 })

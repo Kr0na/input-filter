@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Date} from '../../main.js'
+import {Date, PromiseHelper} from '../../main.js'
 
 describe('Validator', () => {
     describe('Date', () => {
@@ -14,7 +14,7 @@ describe('Validator', () => {
             promises.push(defaultDate.isValid('02-15-1993'))
             promises.push(usDate.isValid('15/02/1993'))
 
-            return Promise.all(promises).catch(() => true)
+            return PromiseHelper.rejectedAll(promises)
         })
     })
 })

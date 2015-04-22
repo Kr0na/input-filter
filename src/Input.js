@@ -37,7 +37,11 @@ class Input {
         if ((!this.getValue() || this.getValue() == "") && !this.required) {
             return true
         }
-        return this.validatorChain.isValid(this.getValue(), context)
+        return this.validatorChain.isValid(this.getValue(), context, this.name).catch((messages) => {
+            throw {
+                [this.name]: messages
+            }
+        })
     }
 
     getMessages() {

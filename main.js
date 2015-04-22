@@ -14,5 +14,6 @@ export default {
     StringLength: require('./src/validator/StringLength.js'),
 
     FilterChain: require('./src/FilterChain.js'),
-    ValidatorChain: require('./src/ValidatorChain.js')
+    ValidatorChain: require('./src/ValidatorChain.js'),
+    PromiseHelper: require('./src/PromiseHelper.js')
 }
