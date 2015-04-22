@@ -1,15 +1,17 @@
 import FilterChain from './FilterChain.js'
 import ValidatorChain from './ValidatorChain.js'
+import Eventable from './Eventable.js'
 
-class Input {
+class Input extends Eventable {
 
     constructor(name) {
+        super()
         this.required = true
         this.name = name
         this.value = null
+        this.valid = null
         this.filterChain = new FilterChain()
         this.validatorChain = new ValidatorChain()
-        this.context = {}
     }
 
     getValidation() {
@@ -22,39 +24,42 @@ class Input {
 
     setValue(value) {
         this.value = this.filterChain.filter(value)
-
         //Reset Validator for validate data again
         this.validatorChain.promise = null
+        this.promise = null
         return this
     }
 
-    getValue(value) {
+    getValue() {
         return this.value
     }
 
     isValid(context = {}) {
-        this.context = context
+        if (this.promise) {
+            return this.promise
+        }
         if ((!this.getValue() || this.getValue() == "") && !this.required) {
             return true
         }
-        return this.validatorChain.isValid(this.getValue(), context, this.name).catch((messages) => {
-            throw {
-                [this.name]: messages
-            }
-        })
-    }
-
-    getMessages() {
-        return new Promise((resolve, reject) => {
-            this.validatorChain.isValid(this.getValue(), this.context).then(
+        this.promise =  this.validatorChain.isValid(this.getValue(), context, this.name)
+            .then(
                 () => {
-                    resolve([])
+                    this.valid = true
+                    this.trigger('valid', this)
+                    return {
+                        [this.name]: this.getValue()
+                    }
                 },
-                (messages) => {
-                    resolve(messages)
+                messages => {
+                    this.valid = false
+                    this.messages = messages
+                    this.trigger('invalid', this)
+                    throw {
+                        [this.name]: messages
+                    }
                 }
             )
-        })
+        return this.promise
     }
 }
 

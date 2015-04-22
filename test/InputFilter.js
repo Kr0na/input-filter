@@ -91,5 +91,40 @@ describe('InputFilter', () => {
                     }
                 )
         })
+        it('should be able to use inner InputFilter', () => {
+            let fooBarFilter = InputFilter.factory({
+                foo: {
+                    validators: [new StringLength({min:3})],
+                    filters: ['StringTrim']
+                },
+                bar: new FooBarFilter('bar')
+            })
+            fooBarFilter.setData({foo: "  123", bar: {foo: "1234", bar: 5}})
+            return fooBarFilter.isValid().then(
+                data => {
+                    assert.equal(data.foo, "123")
+                    assert.equal(data.bar.bar, 5)
+                }
+            )
+        })
+        it('should validate inner InputFilter', () => {
+            let fooBarFilter = InputFilter.factory({
+                foo: {
+                    validators: [new StringLength({min:3})],
+                    filters: ['StringTrim']
+                },
+                bar: new FooBarFilter('bar')
+            })
+            fooBarFilter.setData({foo: "  123", bar: {foo: "1234", bar: 2}})
+            return fooBarFilter.isValid().then(
+                data => {
+                    throw new Error('cannot be valid')
+                },
+                messages => {
+                    assert.property(messages, "bar")
+                    assert.property(messages.bar, "bar")
+                }
+            )
+        })
     })
 })
