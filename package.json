@@ -1,6 +1,6 @@
 {
   "name": "input-filter",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "InputFilter js implementation",
   "main": "main.js",
   "scripts": {
