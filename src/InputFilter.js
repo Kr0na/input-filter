@@ -53,7 +53,9 @@ class InputFilter extends Eventable {
 
     populate() {
         Object.keys(this.inputs).forEach(name => {
-            this.data[name] = this.get(name).setValue(this.rawData[name]).getValue()
+            if (this.rawData[name]) {
+                this.data[name] = this.get(name).setValue(this.rawData[name]).getValue()
+            }
         })
     }
 
