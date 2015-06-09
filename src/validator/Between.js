@@ -2,8 +2,16 @@
 class Between {
 
     constructor(options = {}) {
-        this.min = options.min || false
-        this.max = options.max || false
+        if (options.hasOwnProperty('min')) {
+            this.min = options.min
+        } else {
+            this.min = false
+        }
+        if (options.hasOwnProperty('max')) {
+            this.max = options.max
+        } else {
+            this.max = false
+        }
         this.message = options.message || (options.min >= 0 && options.max >= 0)
             ? `must be between ${this.min} and ${this.max}`
             : (options.min >=0)
