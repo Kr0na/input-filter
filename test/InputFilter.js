@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Input, InputFilter, StringLength, Callback} from '../main.js'
+import {Input, InputFilter, StringLength, Callback, Between, PromiseHelper} from '../main.js'
 
 class FooBarFilter extends InputFilter {
 
@@ -126,5 +126,45 @@ describe('InputFilter', () => {
                 }
             )
         })
+    })
+    it('Regression for inner InputFilter', () => {
+        let filter = InputFilter.factory({
+            foo: {
+                validators: [new StringLength({min: 3})]
+            },
+            bar: InputFilter.factory({
+                str: {
+                    filters: ['StringTrim'],
+                    validators: [new StringLength({min: 4})]
+                },
+                num: {
+                    filters: ['StringTrim', 'Integer'],
+                    validators: [new Between({min: 0})]
+                }
+            })
+        })
+        let empty = filter.setData({}).isValid().then(
+            data => {
+                throw new Error('cannot be valid')
+            },
+            messages => {
+                assert.property(messages, 'foo')
+                assert.property(messages, 'bar')
+                assert.property(messages.bar, 'str')
+                assert.property(messages.bar, 'num')
+                return true
+            }
+        )
+        let part = filter.setData({bar: {str: "adsadf", num: 0}}).isValid().then(
+            data => {
+                throw new Error('cannot be valid')
+            },
+            messages => {
+                assert.property(messages, 'foo')
+                assert.isFalse(messages.hasOwnProperty('bar'))
+                return true
+            }
+        )
+        return PromiseHelper.catchAll([empty, part])
     })
 })

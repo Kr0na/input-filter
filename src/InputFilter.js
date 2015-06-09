@@ -44,8 +44,8 @@ class InputFilter extends Eventable {
     }
 
     setData(data) {
-        this.rawData = data
         this.reset()
+        this.rawData = data || {}
         this.populate()
 
         return this
@@ -53,8 +53,10 @@ class InputFilter extends Eventable {
 
     populate() {
         Object.keys(this.inputs).forEach(name => {
-            if (this.rawData[name]) {
+            if (this.rawData.hasOwnProperty(name)) {
                 this.data[name] = this.get(name).setValue(this.rawData[name]).getValue()
+            } else {
+                this.data[name] = this.get(name).setValue(null).getValue()
             }
         })
     }
@@ -65,6 +67,10 @@ class InputFilter extends Eventable {
 
     reset() {
         this.data = {}
+        this.rawData = {}
+        Object.keys(this.inputs).forEach(name => {
+            this.get(name).reset()
+        })
         this.promise = null
         this.messages = {}
         this.valid = null
@@ -105,6 +111,7 @@ class InputFilter extends Eventable {
         for (let name in items) {
             if (items.hasOwnProperty(name)) {
                 if (items[name] instanceof Input || items[name] instanceof InputFilter) {
+                    items[name].name = name
                     inputFilter.add(items[name])
                     continue
                 }
