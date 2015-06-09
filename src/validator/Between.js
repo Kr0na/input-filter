@@ -12,9 +12,9 @@ class Between {
         } else {
             this.max = false
         }
-        this.message = options.message || (options.min >= 0 && options.max >= 0)
+        this.message = options.message || (options.hasOwnProperty('min') && options.hasOwnProperty('max'))
             ? `must be between ${this.min} and ${this.max}`
-            : (options.min >=0)
+            : (options.hasOwnProperty('min'))
                 ? `must be bigger than ${this.min}`
                 : `must be less than ${this.max} `
 
@@ -24,11 +24,11 @@ class Between {
         if (typeof value !== 'number' && parseFloat(value).toString() !== value) {
             throw new Error(`${value} is not an Number`)
         }
-        if (this.min && this.max) {
+        if (this.min !== false && this.max !== false) {
             if (value >= this.min && value <= this.max) {
                 return true
             }
-        } else if (this.min) {
+        } else if (this.min!== false) {
             if (value >= this.min) {
                 return true
             }
