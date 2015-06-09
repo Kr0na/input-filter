@@ -7,8 +7,12 @@ class ValidatorChain extends Chain {
         if  (this.promise) {
             return this.promise
         }
-        let promises = this.chain.map(item => item.isValid(value, context))
-        this.promise = PromiseHelper.catchAll(promises)
+        try {
+            let promises = this.chain.map(item => item.isValid(value, context))
+            this.promise = PromiseHelper.catchAll(promises)
+        } catch(e) {
+            return Promise.reject(e)
+        }
 
         return this.promise
     }

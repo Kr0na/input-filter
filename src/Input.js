@@ -23,10 +23,14 @@ class Input extends Eventable {
     }
 
     setValue(value) {
-        this.value = this.filterChain.filter(value)
-        //Reset Validator for validate data again
-        this.validatorChain.promise = null
-        this.promise = null
+        try {
+            this.value = this.filterChain.filter(value)
+            //Reset Validator for validate data again
+            this.validatorChain.promise = null
+            this.promise = null
+        } catch (e) {
+            this.promise = Promise.reject(e)
+        }
         return this
     }
 

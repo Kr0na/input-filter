@@ -14,7 +14,7 @@ class StringLength {
 
     isValid(value) {
         if (!value) {
-            return Promise.reject(this.message)
+            throw new Error(this.message)
         }
         let length = value.length
         if (this.min && this.max) {
