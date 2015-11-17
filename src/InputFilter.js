@@ -1,6 +1,6 @@
 import Input from './Input.js'
-import ValidatorRegistry from './validator/validators.js'
-import FilterRegistry from './filter/filters.js'
+import * as ValidatorRegistry from './validator/validators.js'
+import * as FilterRegistry from './filter/filters.js'
 import PromiseHelper from './PromiseHelper.js'
 import Eventable from './Eventable.js'
 
