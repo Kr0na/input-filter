@@ -1,4 +1,4 @@
-export default {
+export {
     Input: require('./src/Input.js'),
     InputFilter: require('./src/InputFilter.js'),
 
