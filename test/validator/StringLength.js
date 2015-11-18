@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {StringLength, PromiseHelper} from '../../main.js'
+import {StringLength, PromiseHelper} from '../../src/main.js'
 
 describe('Validator', () => {
     describe('StringLength', () => {

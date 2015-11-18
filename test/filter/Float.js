@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Float} from '../../main.js'
+import {Float} from '../../src/main.js'
 
 describe('Filter', () => {
     describe('Float', () => {

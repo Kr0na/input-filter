@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {StringTrim} from '../../main.js'
+import {StringTrim} from '../../src/main.js'
 
 describe('Filter', () => {
     describe('StringTrim', () => {

@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Bool} from '../../main.js'
+import {Bool} from '../../src/main.js'
 
 describe('Filter', () => {
     describe('Boolean', () => {

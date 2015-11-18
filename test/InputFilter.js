@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Input, InputFilter, StringLength, Callback, Between, PromiseHelper} from '../main.js'
+import {Input, InputFilter, StringLength, Callback, Between, PromiseHelper} from '../src/main.js'
 
 class FooBarFilter extends InputFilter {
 

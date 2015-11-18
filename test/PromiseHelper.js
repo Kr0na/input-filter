@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {PromiseHelper} from '../main.js'
+import {PromiseHelper} from '../src/main.js'
 
 describe('PromiseHelper', () => {
     it('#catchAll should catch all rejected messages', () => {

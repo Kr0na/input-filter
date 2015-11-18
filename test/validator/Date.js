@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Date, PromiseHelper} from '../../main.js'
+import {Date, PromiseHelper} from '../../src/main.js'
 
 describe('Validator', () => {
     describe('Date', () => {

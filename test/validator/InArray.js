@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {InArray, PromiseHelper} from '../../main.js'
+import {InArray, PromiseHelper} from '../../src/main.js'
 
 describe('Validator', () => {
     describe('InArray', () => {

@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Between, PromiseHelper} from '../../main.js'
+import {Between, PromiseHelper} from '../../src/main.js'
 
 describe('Validator', () => {
     describe('Between', () => {

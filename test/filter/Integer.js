@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {Integer} from '../../main.js'
+import {Integer} from '../../src/main.js'
 
 describe('Filter', () => {
     describe('Integer', () => {

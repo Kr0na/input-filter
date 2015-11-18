@@ -1,5 +1,5 @@
 import {assert} from 'chai'
-import {ValidatorChain, Between, Callback} from '../main.js'
+import {ValidatorChain, Between, Callback} from '../src/main.js'
 
 describe('ValidatorChain', () => {
     it('should be valid', () => {
