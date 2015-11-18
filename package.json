@@ -1,19 +1,14 @@
 {
   "name": "input-filter",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "InputFilter js implementation",
-  "main": "main.js",
+  "main": "lib/main.js",
   "scripts": {
     "test": "mocha --compilers js:babel/register"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Kr0na/input-filter.git"
-  },
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
   },
   "keywords": [
     "Input",
